@@ -15,6 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# data paths
+DATA_DIR = os.path.join(BASE_DIR, '/data')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
+    'processing'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +128,5 @@ STATIC_URL = '/static/'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+# this should include any submodule tasks
+CELERY_IMPORTS = ('processing.alpaca.tasks',)

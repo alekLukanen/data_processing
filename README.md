@@ -1,5 +1,11 @@
-# Application name here
+# Financial Data Processing
 Description of application goes here...
+
+## Alpaca Data
+Before you can start using the Alpaca API
+you first need to set a few environment variables.
+
+https://docs.alpaca.markets/api-documentation/how-to/
 
 ## Build the Development Environment
 To create your python environment simply run

@@ -21,7 +21,7 @@ class DataStatus:
 
 
 class Data(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     provider = models.TextField(null=True)
@@ -30,6 +30,9 @@ class Data(models.Model):
     stage = models.TextField()
     status = models.TextField(default=DataStatus.INITIALIZED)
     location = models.TextField()
+    # a comma separated string of the search params in alphabetical order. Ex: a_time=100,b_time=200,ab=1,...
+    search_kwargs = models.TextField(null=True)
+    search_args = models.TextField(null=True)
 
 
 class Symbol(models.Model):
@@ -37,7 +40,7 @@ class Symbol(models.Model):
     A Symbol can have one to many EquityData objects pointing
     to it each at various stages.
     """
-    id = models.UUIDField(primary_key=True, default=uuid)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     symbol = models.TextField()
     name = models.TextField()
 
@@ -49,10 +52,10 @@ class Symbol(models.Model):
 
 
 class EquityData(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     exchange = models.TextField(null=True)
     category = models.TextField(null=True)  # price, volume, financial info, description, etc...
     start_date = models.DateTimeField(null=True)
     end_date = models.DateTimeField(null=True)
-    data = models.ForeignKey(Data)
-    symbol = models.ForeignKey(Symbol)
+    data = models.ForeignKey(Data, on_delete=models.CASCADE)
+    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
