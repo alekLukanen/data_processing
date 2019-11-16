@@ -27,9 +27,9 @@ class Data(models.Model):
     provider = models.TextField(null=True)
     provider_resource_path = models.TextField(null=True)
     file_format = models.TextField()
-    stage = models.TextField()
+    stage = models.TextField(default=DataStages.ORIGINAL)
     status = models.TextField(default=DataStatus.INITIALIZED)
-    location = models.TextField()
+    file_location = models.TextField()
     # a comma separated string of the search params in alphabetical order. Ex: a_time=100,b_time=200,ab=1,...
     search_kwargs = models.TextField(null=True)
     search_args = models.TextField(null=True)
@@ -41,8 +41,8 @@ class Symbol(models.Model):
     to it each at various stages.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    symbol = models.TextField()
-    name = models.TextField()
+    symbol = models.TextField()  # caps only
+    name = models.TextField(null=True)
 
     def get_price(self, start_date, end_date, precision='1d'):
         pass
@@ -57,5 +57,5 @@ class EquityData(models.Model):
     category = models.TextField(null=True)  # price, volume, financial info, description, etc...
     start_date = models.DateTimeField(null=True)
     end_date = models.DateTimeField(null=True)
-    data = models.ForeignKey(Data, on_delete=models.CASCADE)
+    data = models.ForeignKey(Data, on_delete=models.CASCADE, null=True)
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
