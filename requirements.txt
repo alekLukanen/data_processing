@@ -11,7 +11,7 @@ chardet==3.0.4
 decorator==4.4.1
 defusedxml==0.6.0
 Django==2.2.6
-django-celery-results==1.1.2
+django-celery-results==2.4.0
 entrypoints==0.3
 idna==2.8
 importlib-metadata==0.23
